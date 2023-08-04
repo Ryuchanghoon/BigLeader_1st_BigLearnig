@@ -25,20 +25,21 @@ print(time)
 
 
 
-n, k = map(int,input().split())
+def bfs(a, b):
+    queue = deque([(a, 0)])
+    visit = set([a])
 
+    while queue:
+        now, time = queue.popleft()
 
-queue = deque([(n, 0)])
-visit = set([n])
+        if now == b:
+            return time
 
-while queue:
-    now, time = queue.popleft()
+        for next in [now + 1, now - 1, now * 2]:
+            if 0 <= next <= 100000 and next not in visit:
+                visit.add(next)
+                queue.append((next, time + 1))
 
-    if now == k:
-        print(time)
-        break
-
-    for next in [now + 1, now-1]:
-        if 0 <= next <= 100000 and next not in visit:
-            visit.add(next)
-            queue.append((next, time + 1))
+n, k = map(int, input().split())
+result = bfs(n, k)
+print(result)
